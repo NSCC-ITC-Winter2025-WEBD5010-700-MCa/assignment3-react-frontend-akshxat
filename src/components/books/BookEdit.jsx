@@ -1,38 +1,35 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
 
-export default function BookCreate() {
+function BookEdit () {
+    const { id } = useParams()
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm()
 
-    const { register, handleSubmit, formState: { errors } } = useForm()
-    const queryClient = useQueryClient()
-    const navigate = useNavigate()
-
-    const collectData = (data) => {
-        console.log(data)
-        createBookMutation.mutate(data)
-    }
-
-    const createBookMutation = useMutation({
-        mutationFn: async (data) => {
-            const response = await fetch('http://localhost:3000/books', {
-                method: 'POST',
-                headers: { 'content-type': 'application/json' },
-                body: JSON.stringify(data)
-            })
+    const { isPending, error, data } = useQuery({
+        queryKey: ['books', id],
+        queryFn: async () => {
+            const response = await fetch(`http://localhost:3000/books/${id}`)
             return response.json()
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['booksData']),
-                navigate('/admin/books')
         }
     })
 
+    useEffect(() => {
+        console.log(data)
+        // pre-populate the form
+        if (data) {
+            setValue('title', data.title)
+            setValue('author', data.author)
+            setValue('published_year', data.published_year)
+            setValue('genre', data.genre)
+        }
+    }, [data])
+
     return (
         <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Create New Book</h2>
-            <form onSubmit={handleSubmit(collectData)} className="space-y-4">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Book - Id: {data?.id}</h2>
+            <form className="space-y-4">
                 <div>
                     <input
                         {...register('title', { required: 'Title is required!' })}
@@ -73,9 +70,11 @@ export default function BookCreate() {
                     type="submit"
                     className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all"
                 >
-                    Create Book
+                    Submit Changes
                 </button>
             </form>
         </div>
     )
 }
+
+export default BookEdit
