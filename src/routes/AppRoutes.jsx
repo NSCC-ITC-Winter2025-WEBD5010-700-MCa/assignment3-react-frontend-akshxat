@@ -9,6 +9,9 @@ import Subscriptions from '../pages/Subscriptions';
 import Books from '../pages/Books';
 import BookCreate from '../components/books/BookCreate';
 import BookEdit from '../components/books/BookEdit';
+import Transit from '../pages/Transit';
+import TransitCreate from '../components/transit/TransitCreate';
+import TransitEdit from '../components/transit/TransitEdit';
 
 const router = createBrowserRouter([
     {
@@ -54,6 +57,20 @@ const router = createBrowserRouter([
                     {
                         path: ':id/edit',
                         element: <BookEdit />
+                    }
+                ]
+            },
+            {
+                path: 'transit',
+                element: <Transit />,
+                children: [
+                    {
+                        path: 'create',
+                        element: <TransitCreate />
+                    },
+                    {
+                        path: ':id/edit',
+                        element: <TransitEdit />
                     }
                 ]
             },
