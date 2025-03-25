@@ -7,17 +7,17 @@ const Transits = () => {
 
     const location = useLocation()
 
-    console.log(location.pathname)
+    // console.log(location.pathname)
 
     const { isPending, error, data } = useQuery({
         queryKey: ['transitsData'],
         queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_BOOKS_API_URL}`)
+            const response = await fetch(`${import.meta.env.VITE_TRANSIT_API_URL}`)
             return response.json()
         },
         staleTime: Infinity
     })
-
+    console.log(data)
     if (isPending) return <div> Loading...</div>
     if (error) return <div> {`An error had occured: + ${error.message}`}</div>
 

@@ -6,10 +6,15 @@ export default function TransitForm({ onDataCollected, initialData }) {
 
     useEffect(() => {
         if(initialData) {
-            setValue('title', initialData.title)
-            setValue('author', initialData.author)
-            setValue('published_year', initialData.published_year)
-            setValue('genre', initialData.genre)
+            setValue('name', initialData.name)
+            setValue('country', initialData.country)
+            setValue('fleet_size', initialData.number_of_trains)
+            setValue('stations', initialData.number_of_stations)
+            setValue('system_length', initialData.system_length_km)
+            setValue('ridership', initialData.annual_ridership)
+            setValue('speed_avg', initialData.speed_kmph.average)
+            setValue('speed_max', initialData.speed_kmph.maximum)
+            setValue('manufacturers', initialData.rolling_stock_manufacturer)
         }
     }, [initialData])
 
@@ -17,39 +22,84 @@ export default function TransitForm({ onDataCollected, initialData }) {
         <form onSubmit={handleSubmit(onDataCollected)} className="space-y-4">
                 <div>
                     <input
-                        {...register('title', { required: 'Title is required!' })}
+                        {...register('name', { required: 'Name is required!' })}
                         type="text"
-                        placeholder="Title"
+                        placeholder="Name"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                 </div>
                 <div>
                     <input
-                        {...register('author', { required: 'Author is required!' })}
+                        {...register('country', { required: 'Country is required!' })}
                         type="text"
-                        placeholder="Author"
+                        placeholder="Country"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.author && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                    {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country.message}</p>}
                 </div>
                 <div>
                     <input
-                        {...register('published_year', { required: 'Year is required!', min: { value: 1700, message: 'Year must be greater than 1700' }})}
+                        {...register('fleet_size', { required: 'Fleet Size is required!', min: { value: 1700, message: 'Year must be greater than 1700' }})}
                         type="number"
-                        placeholder="Year"
+                        placeholder="Fleet Size"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.published_year && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                    {errors.fleet_size && <p className="text-red-500 text-sm mt-1">{errors.fleet_size.message}</p>}
                 </div>
                 <div>
                     <input
-                        {...register('genre', { required: 'Genre is required!' })}
+                        {...register('stations', { required: 'Stations is required!' })}
                         type="text"
-                        placeholder="Genre"
+                        placeholder="Stations"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    {errors.genre && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                    {errors.stations && <p className="text-red-500 text-sm mt-1">{errors.stations.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('system_length', { required: 'System Length is required!' })}
+                        type="number"
+                        placeholder="System Length"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {errors.system_length && <p className="text-red-500 text-sm mt-1">{errors.system_length.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('ridership', { required: 'Ridership is required!' })}
+                        type="number"
+                        placeholder="Ridership"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {errors.ridership && <p className="text-red-500 text-sm mt-1">{errors.ridership.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('speed_avg', { required: 'Speed Average is required!' })}
+                        type="number"
+                        placeholder="Speed Average"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {errors.speed_avg && <p className="text-red-500 text-sm mt-1">{errors.speed_avg.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('speed_max', { required: 'Speed Maximum is required!' })}
+                        type="number"
+                        placeholder="Speed Maximum"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {errors.speed_max && <p className="text-red-500 text-sm mt-1">{errors.speed_max.message}</p>}
+                </div>
+                <div>
+                    <input
+                        {...register('manufacturers', { required: 'Manufacturers is required!' })}
+                        type="text"
+                        placeholder="Manufacturers"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {errors.manufacturers && <p className="text-red-500 text-sm mt-1">{errors.manufacturers.message}</p>}
                 </div>
                 <button
                     type="submit"
