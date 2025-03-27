@@ -17,7 +17,7 @@ const Transits = () => {
         },
         staleTime: Infinity
     })
-    console.log(data)
+
     if (isPending) return <div> Loading...</div>
     if (error) return <div> {`An error had occured: + ${error.message}`}</div>
 

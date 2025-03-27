@@ -24,6 +24,9 @@ export default function TransitCreate() {
     })
 
     const processData = (data) => {
+        data.rolling_stock_manufacturer = data.rolling_stock_manufacturer
+          .split(',')
+          .map(item => item.replace(/\s/g, ''))
         createTransitMutation.mutate(data)
     }
 

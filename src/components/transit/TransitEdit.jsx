@@ -3,21 +3,35 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import TransitForm from './TransitForm.jsx'
 
 function TransitEdit () {
-    const { _id } = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 
     const { data } = useQuery({
-        queryKey: ['transits', _id],
+        queryKey: ['transits', id],
         queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_TRANSIT_API_URL}/${_id}`)
-            return response.json()
+            const response = await fetch(`${import.meta.env.VITE_TRANSIT_API_URL}/${id}`)
+            let text = await response.text()
+ 
+            // Regex to fix IDs
+            text = text.replace(/new ObjectId\('(.+?)'\)/g, '"$1"')
+            // Regex to quote keys
+            text = text.replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1 "$2":')
+
+            // Regex to replace single quotes with double quotes
+            text = text.replace(/'/g, '"')
+
+            try {
+                return JSON.parse(text)
+            } catch (e) {
+                throw new Error("Invalid JSON response: " + e.message)
+            }
         }
     })
 
     const editTransitMutation = useMutation({
         mutationFn: async (data) => {
-            const response = await fetch(`${import.meta.env.VITE_TRANSIT_API_URL}/${_id}`, {
+            const response = await fetch(`${import.meta.env.VITE_TRANSIT_API_URL}/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -27,11 +41,13 @@ function TransitEdit () {
         onSuccess: () => {
             queryClient.invalidateQueries(['transitsData'])
             navigate('/admin/transit')
-
         }
     })
 
     const processData = (data) => {
+        data.rolling_stock_manufacturer = data.rolling_stock_manufacturer
+          .split(',')
+          .map(item => item.replace(/\s/g, ''))
         editTransitMutation.mutate(data)
     }
 

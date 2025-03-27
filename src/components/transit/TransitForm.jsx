@@ -8,13 +8,13 @@ export default function TransitForm({ onDataCollected, initialData }) {
         if(initialData) {
             setValue('name', initialData.name)
             setValue('country', initialData.country)
-            setValue('fleet_size', initialData.number_of_trains)
-            setValue('stations', initialData.number_of_stations)
-            setValue('system_length', initialData.system_length_km)
-            setValue('ridership', initialData.annual_ridership)
-            setValue('speed_avg', initialData.speed_kmph.average)
-            setValue('speed_max', initialData.speed_kmph.maximum)
-            setValue('manufacturers', initialData.rolling_stock_manufacturer)
+            setValue('number_of_trains', initialData.number_of_trains)
+            setValue('number_of_stations', initialData.number_of_stations)
+            setValue('system_length_km', initialData.system_length_km)
+            setValue('annual_ridership', initialData.annual_ridership)
+            setValue('speed_kmph.average', initialData.speed_kmph?.average)
+            setValue('speed_kmph.maximum', initialData.speed_kmph?.maximum)
+            setValue('rolling_stock_manufacturer', initialData.rolling_stock_manufacturer.join(', '))
         }
     }, [initialData])
 
@@ -40,7 +40,7 @@ export default function TransitForm({ onDataCollected, initialData }) {
                 </div>
                 <div>
                     <input
-                        {...register('fleet_size', { required: 'Fleet Size is required!', min: { value: 1700, message: 'Year must be greater than 1700' }})}
+                        {...register('number_of_trains')}
                         type="number"
                         placeholder="Fleet Size"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -49,8 +49,8 @@ export default function TransitForm({ onDataCollected, initialData }) {
                 </div>
                 <div>
                     <input
-                        {...register('stations', { required: 'Stations is required!' })}
-                        type="text"
+                        {...register('number_of_stations')}
+                        type="number"
                         placeholder="Stations"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -58,7 +58,7 @@ export default function TransitForm({ onDataCollected, initialData }) {
                 </div>
                 <div>
                     <input
-                        {...register('system_length', { required: 'System Length is required!' })}
+                        {...register('system_length_km')}
                         type="number"
                         placeholder="System Length"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -67,7 +67,7 @@ export default function TransitForm({ onDataCollected, initialData }) {
                 </div>
                 <div>
                     <input
-                        {...register('ridership', { required: 'Ridership is required!' })}
+                        {...register('annual_ridership')}
                         type="number"
                         placeholder="Ridership"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -76,25 +76,25 @@ export default function TransitForm({ onDataCollected, initialData }) {
                 </div>
                 <div>
                     <input
-                        {...register('speed_avg', { required: 'Speed Average is required!' })}
+                        {...register('speed_kmph.average')}
                         type="number"
-                        placeholder="Speed Average"
+                        placeholder="Average Speed"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {errors.speed_avg && <p className="text-red-500 text-sm mt-1">{errors.speed_avg.message}</p>}
                 </div>
                 <div>
                     <input
-                        {...register('speed_max', { required: 'Speed Maximum is required!' })}
+                        {...register('speed_kmph.maximum')}
                         type="number"
-                        placeholder="Speed Maximum"
+                        placeholder="Maximum Speed"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {errors.speed_max && <p className="text-red-500 text-sm mt-1">{errors.speed_max.message}</p>}
                 </div>
                 <div>
                     <input
-                        {...register('manufacturers', { required: 'Manufacturers is required!' })}
+                        {...register('rolling_stock_manufacturer')}
                         type="text"
                         placeholder="Manufacturers"
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

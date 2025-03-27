@@ -54,10 +54,9 @@ function TransitsTable({ transits }) {
                             <td className="border border-gray-300 px-4 py-2">{transit.number_of_stations}</td>
                             <td className="border border-gray-300 px-4 py-2">{transit.system_length_km} Km</td>
                             <td className="border border-gray-300 px-4 py-2">{transit.annual_ridership/1000000} M</td>
-                            <td className="border border-gray-300 px-4 py-2"><p>Avg: {transit.speed_kmph.average} Kmph</p><p>Max: {transit.speed_kmph.maximum} Kmph</p></td>
+                            <td className="border border-gray-300 px-4 py-2"><p>Avg: {transit.speed_kmph?.average} Kmph</p><p>Max: {transit.speed_kmph?.maximum} Kmph</p></td>
                             <td className="border border-gray-300 px-4 py-2">{transit.rolling_stock_manufacturer.join(', ')}</td>
                             <td className="border border-gray-300 px-4 py-2 text-center space-x-1">
-                                <button className="bg-green-500 text-white px-2 py-1 text-sm rounded hover:bg-green-600">Details</button>
                                 <button onClick={() => navigate(`${transit._id}/edit`) } className="bg-blue-500 text-white px-2 py-1 text-sm rounded hover:bg-blue-600">Edit</button>
                                 <button onClick={() => { handleDelete(transit._id) }} className="bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-600">Delete</button>
                             </td>
